@@ -1,8 +1,13 @@
 import React from 'react'
+import DashBoard from './Pages/DashBoard'
+import { DarkModeProvider } from './Context/DarkmodeContext'
 
 const App = () => {
   return (
-    <div>App</div>
+    <DarkModeProvider>
+      <DashBoard/>
+    </DarkModeProvider>
+    
   )
 }
 
