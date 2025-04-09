@@ -1,12 +1,15 @@
 import React from 'react'
 import DashBoard from './Pages/DashBoard'
 import { DarkModeProvider } from './Context/DarkmodeContext'
+import { BrowserRouter } from 'react-router-dom'
 
 const App = () => {
   return (
-    <DarkModeProvider>
-      <DashBoard/>
-    </DarkModeProvider>
+    <BrowserRouter>
+      <DarkModeProvider>
+        <DashBoard/>
+      </DarkModeProvider>
+    </BrowserRouter>
     
   )
 }

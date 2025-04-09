@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { DarkModeContext } from '../Context/DarkmodeContext';
 import { Clock, Home, Moon, Sun } from 'lucide-react';
+import { Link } from 'react-router-dom'
 
 
 const NavBar = () => {
@@ -15,8 +16,11 @@ const NavBar = () => {
             <h1 className="text-2xl font-bold">VOLTVIEW</h1>
           </div>
 
-          <div className="flex items-end justify-between space-x-4">
-            
+          <div className="flex items-end justify-between space-x-5">
+            <Link>Dashboard</Link>
+            <Link>Devices</Link>
+            <Link>Weather</Link>
+            <Link>Reports</Link>
           </div>
           
           <div className="flex items-center space-x-4">
