@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 const App = () => {
   return (
     <BrowserRouter>
-      <DarkModeProvider>
+    <DarkModeProvider >
         <DashBoard/>
       </DarkModeProvider>
     </BrowserRouter>
