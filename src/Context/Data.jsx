@@ -1,16 +1,16 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 
 export const DataContext = createContext()
 const DataProvider = ({ children }) => {
     const [devices, setdevices] = useState([
-        { id: 1, name: 'Living Room Lights', type: 'light', status: false, location: 'Living Room' },
-        { id: 2, name: 'Kitchen AC', type: 'ac', status: false, location: 'Kitchen' },
-        { id: 3, name: 'Smart TV', type: 'tv', status: false, location: 'Living Room' },
-        { id: 4, name: 'Coffee Maker', type: 'coffee', status: false, location: 'Kitchen' },
-        { id: 5, name: 'Smart Speaker', type: 'speaker', status: false, location: 'Bedroom' },
-        { id: 6, name: 'Ceiling Fan', type: 'fan', status: false, location: 'Bedroom' },
-        { id: 7, name: 'WiFi Router', type: 'wifi', status: true, location: 'Home Office' },
-        { id: 8, name: 'Smart Lock', type: 'lock', status: true, location: 'Front Door' }
+        { id: 1, name: 'Living Room Lights', type: 'light', status: false, location: 'Living Room', consumption: 0.1 },
+        { id: 2, name: 'Kitchen AC', type: 'ac', status: false, location: 'Kitchen', consumption: 1.2 },
+        { id: 3, name: 'Smart TV', type: 'tv', status: false, location: 'Living Room', consumption: 0.3 },
+        { id: 4, name: 'Coffee Maker', type: 'coffee', status: false, location: 'Kitchen', consumption: 0.5 },
+        { id: 5, name: 'Smart Speaker', type: 'speaker', status: false, location: 'Bedroom', consumption: 0.2 },
+        { id: 6, name: 'Ceiling Fan', type: 'fan', status: false, location: 'Bedroom', consumption: 0.4 },
+        { id: 7, name: 'WiFi Router', type: 'wifi', status: true, location: 'Home Office', consumption: 0.1 },
+        { id: 8, name: 'Smart Lock', type: 'lock', status: true, location: 'Front Door', consumption: 0.05 }
     ])
     const [data, setdata] = useState({
         totalDevices: 14,
@@ -29,6 +29,12 @@ const DataProvider = ({ children }) => {
         }))
     })
 
+    useEffect(() => {
+        setdata(prevData => ({
+            ...prevData,
+            devices: devices,
+        }))
+    }, [devices])
     
 
     return (
