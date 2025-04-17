@@ -31,7 +31,7 @@ const DeviceIcon = ({ type }) => {
 
 const DeviceStatus = () => {
     const {darkMode}  = useContext(DarkModeContext);
-    const data = useContext(DataContext);
+    const {data} = useContext(DataContext);
     return (
         <div className={`col-span-2 p-4 rounded-lg shadow ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
             <h3 className="font-semibold mb-4">Active Devices</h3>
@@ -39,13 +39,13 @@ const DeviceStatus = () => {
                 {data.devices.map(device => (
                     <div
                         key={device.id}
-                        className={`p-3 rounded-lg flex justify-between items-center ${device.status === 'on' ?
+                        className={`p-3 rounded-lg flex justify-between items-center ${device.status === true ?
                                 (darkMode ? 'bg-gray-700' : 'bg-green-50') :
                                 (darkMode ? 'bg-gray-900 opacity-60' : 'bg-gray-100 opacity-70')
                             }`}
                     >
                         <div className="flex items-center">
-                            <div className={`p-2 rounded-full mr-3 ${device.status === 'on' ?
+                            <div className={`p-2 rounded-full mr-3 ${device.status === true ?
                                     (darkMode ? 'bg-green-900 text-green-400' : 'bg-green-200 text-green-700') :
                                     (darkMode ? 'bg-gray-800 text-gray-400' : 'bg-gray-200 text-gray-500')
                                 }`}>
@@ -59,16 +59,16 @@ const DeviceStatus = () => {
                             </div>
                         </div>
                         <div className="flex items-center">
-                            {device.status === 'on' && (
+                            {device.status === true && (
                                 <span className={`text-sm mr-4 ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`}>
                                     {device.consumption} kWh
                                 </span>
                             )}
-                            <div className={`px-2 py-1 rounded text-xs ${device.status === 'on' ?
+                            <div className={`px-2 py-1 rounded text-xs ${device.status === true ?
                                     (darkMode ? 'bg-green-900 text-green-400' : 'bg-green-200 text-green-800') :
                                     (darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-300 text-gray-600')
                                 }`}>
-                                {device.status.toUpperCase()}
+                                {device.status==true ? 'On' : 'Off'}
                             </div>
                         </div>
                     </div>

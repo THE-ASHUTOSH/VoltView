@@ -36,7 +36,7 @@ const WeatherIcon = ({ condition }) => {
 
 const DashBoard = () => {
   const { darkMode } = useContext(DarkModeContext);
-  const data = useContext(DataContext);
+  const {data} = useContext(DataContext);
 
   const totalEnergyConsumption = data.devices
     .filter(device => device.status === 'on')

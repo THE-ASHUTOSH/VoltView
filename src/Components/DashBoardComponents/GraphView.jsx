@@ -4,7 +4,7 @@ import { DataContext } from '../../Context/Data'
 
 const GraphView = () => {
     const {darkMode} = useContext(DarkModeContext)
-    const data = useContext(DataContext)
+    const {data} = useContext(DataContext)
     const [timeFilter, setTimeFilter] = useState('day');
     return (
         <div className={`p-4 rounded-lg shadow mb-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
