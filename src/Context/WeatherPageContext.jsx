@@ -54,7 +54,7 @@ const WeatherPageContextProvider = ({children}) => {
     useEffect(() => {
         async function getWeatherData() {
             try{
-            const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=21937f7fa61c4d159e152858251002&q=${location}&aqi=no`)
+            const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=21937f7fa61c4d159e152858251002&q=${location}&aqi=no`)
             console.info(response)
             console.log(response.data)
             setWeatherData(response.data)
