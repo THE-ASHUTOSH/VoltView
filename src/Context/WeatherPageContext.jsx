@@ -54,7 +54,7 @@ const WeatherPageContextProvider = ({children}) => {
     useEffect(() => {
         async function getLocation() {
             try {
-                const response = await axios.get("http://ip-api.com/json")
+                const response = await axios.get("https://ip-api.com/json")
                 // console.log(response.data.city)
                 setlocation(response.data.city)
             }catch (error) {
