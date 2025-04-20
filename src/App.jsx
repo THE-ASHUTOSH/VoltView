@@ -7,6 +7,7 @@ import DevicesPage from './Pages/DevicesPage'
 import WeatherPageContext from './Context/WeatherPageContext'
 import WeatherPage from './Pages/WeatherPage'
 import WeatherPageContextProvider from './Context/WeatherPageContext'
+import ReportPage from './Pages/ReportPage'
 
 
 const App = () => {
@@ -14,15 +15,14 @@ const App = () => {
     <BrowserRouter>
       <DarkModeProvider >
         <DataProvider>
-          <Routes>
-            <Route path="/" element={<DashBoard />} />
-            <Route path="/devices" element={<DevicesPage />} />
-            <Route path="/weather" element={
-              <WeatherPageContextProvider>
-                <WeatherPage />
-              </WeatherPageContextProvider>
-            } />
-          </Routes>
+          <WeatherPageContextProvider>
+            <Routes>
+              <Route path="/" element={<DashBoard />} />
+              <Route path="/devices" element={<DevicesPage />} />
+              <Route path="/weather" element={<WeatherPage />} />
+              <Route path="/report" element={<ReportPage />}></Route>
+            </Routes>
+          </WeatherPageContextProvider>
         </DataProvider>
       </DarkModeProvider>
     </BrowserRouter>
