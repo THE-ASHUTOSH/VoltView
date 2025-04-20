@@ -49,24 +49,37 @@ const WeatherPageContextProvider = ({children}) => {
             "gust_kph": 10.4
         }
     };
-    const [location, setlocation] = useState("Bangalore")
+    const [location, setlocation] = useState("India")
     const [weatherData, setWeatherData] = useState()
+    useEffect(() => {
+        async function getLocation() {
+            try {
+                const response = await axios.get("http://ip-api.com/json")
+                // console.log(response.data.city)
+                setlocation(response.data.city)
+            }catch (error) {
+                console.log("Error fetching location data", error)
+            }
+        }
+        getLocation()
+    },[])
     useEffect(() => {
         async function getWeatherData() {
             try{
             const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=21937f7fa61c4d159e152858251002&q=${location}&aqi=no`)
-            console.info(response)
-            console.log(response.data)
+            // console.info(response)
+            // console.log(response.data)
             setWeatherData(response.data)
             }catch(error){
-                console.error("Error fetching weather data", error)
+                console.log("Error fetching weather data", error)
+                alert("Location not found")
             }
         }
         getWeatherData()
-    }, [])
+    }, [location])
 
     return (
-        <WeatherPageContext.Provider value={{weatherData}}>
+        <WeatherPageContext.Provider value={{weatherData,setlocation}}>
             {children}
         </WeatherPageContext.Provider>
     )

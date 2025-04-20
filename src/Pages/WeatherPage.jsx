@@ -86,7 +86,7 @@ const generateForecastData = (currentData) => {
 
 export default function WeatherPage() {
     const { darkMode } = useContext(DarkModeContext);
-    const { weatherData } = useContext(WeatherPageContext);
+    const { weatherData,setlocation } = useContext(WeatherPageContext);
     const [searchQuery, setSearchQuery] = useState('');
     const [viewMode, setViewMode] = useState('daily'); // 'daily' or 'hourly'
     const [forecastData, setForecastData] = useState(undefined);
@@ -98,7 +98,7 @@ export default function WeatherPage() {
         }
     }, [weatherData]);
     // Simulate real-time data updates
-    console.log(weatherData);
+    // console.log(weatherData);
     if (weatherData == undefined||forecastData == undefined) {
         return (
             <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
@@ -116,8 +116,7 @@ export default function WeatherPage() {
         e.preventDefault();
         // In a real app, this would fetch data for the searched location
         if (searchQuery.trim()) {
-            const newData = { ...weatherData };
-            newData.location.name = searchQuery;
+            setlocation(searchQuery);
             // setWeatherData(newData);
             setSearchQuery('');
         }

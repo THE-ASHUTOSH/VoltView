@@ -21,7 +21,7 @@ const Suggestion = () => {
     const {data} = useContext(DataContext)
 
     const totalEnergyConsumption = data.devices
-    .filter(device => device.status === 'on')
+    .filter(device => device.status === true)
     .reduce((total, device) => total + device.consumption, 0).toFixed(2);
 
     return (

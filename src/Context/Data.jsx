@@ -4,8 +4,8 @@ export const DataContext = createContext()
 const DataProvider = ({ children }) => {
     const [devices, setdevices] = useState([
         { id: 1, name: 'Living Room Lights', type: 'light', status: false, location: 'Living Room', consumption: 0.1 },
-        { id: 2, name: 'Kitchen AC', type: 'ac', status: false, location: 'Kitchen', consumption: 1.2 },
-        { id: 3, name: 'Smart TV', type: 'tv', status: false, location: 'Living Room', consumption: 0.3 },
+        { id: 2, name: 'Kitchen AC', type: 'ac', status: true, location: 'Kitchen', consumption: 1.2 },
+        { id: 3, name: 'Smart TV', type: 'tv', status: true, location: 'Living Room', consumption: 0.3 },
         { id: 4, name: 'Coffee Maker', type: 'coffee', status: false, location: 'Kitchen', consumption: 0.5 },
         { id: 5, name: 'Smart Speaker', type: 'speaker', status: false, location: 'Bedroom', consumption: 0.2 },
         { id: 6, name: 'Ceiling Fan', type: 'fan', status: false, location: 'Bedroom', consumption: 0.4 },
@@ -13,8 +13,8 @@ const DataProvider = ({ children }) => {
         { id: 8, name: 'Smart Lock', type: 'lock', status: true, location: 'Front Door', consumption: 0.05 }
     ])
     const [data, setdata] = useState({
-        totalDevices: 14,
-        activeDevices: 8,
+        totalDevices: devices.length,
+        activeDevices: devices.filter(device => device.status).length,
         currentUsage: (Math.random() * 3.5 + 1.2).toFixed(2),
         temperature: {
             indoor: (Math.random() * 5 + 20).toFixed(1),
@@ -33,6 +33,8 @@ const DataProvider = ({ children }) => {
         setdata(prevData => ({
             ...prevData,
             devices: devices,
+            activeDevices: devices.filter(device => device.status).length,
+
         }))
     }, [devices])
     
