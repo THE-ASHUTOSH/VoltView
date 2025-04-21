@@ -1,6 +1,59 @@
 import React, { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 export const WeatherPageContext = createContext();
+
+const getUserAddress = () => {
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+            reject("Geolocation is not supported by this browser.");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const { latitude, longitude } = position.coords;
+                try {
+                    const address = await fetchAddress(latitude, longitude);
+                    
+                    resolve(address);
+                } catch (error) {
+                    console.error("Error fetching address:", error);
+                    reject("Failed to retrieve address.");
+                }
+            },
+            (error) => {
+                alert(getGeolocationErrorMessage(error));
+                reject("Failed to get user location.");
+            }
+        );
+    });
+};
+
+const fetchAddress = async (lat, lon) => {
+    const url = `https://us1.locationiq.com/v1/reverse?key=pk.78a59df4fd8aaf9781702d79911e2a29&lat=${lat}&lon=${lon}&format=json`;
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch address. Status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data)
+    console.log(data.address.city, data.address.town , data.address.village , data.address.suburb)
+    return data.address.state_district||data.address.state||data.address.country
+};
+
+const getGeolocationErrorMessage = (error) => {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            return "User denied the request for Geolocation.";
+        case error.POSITION_UNAVAILABLE:
+            return "Location information is unavailable.";
+        case error.TIMEOUT:
+            return "The request to get user location timed out.";
+        default:
+            return "An unknown error occurred.";
+    }
+};
+
 const WeatherPageContextProvider = ({children}) => {
     const sampleApiData = {
         "location": {
@@ -54,22 +107,22 @@ const WeatherPageContextProvider = ({children}) => {
     useEffect(() => {
         async function getLocation() {
             try {
-                const response = await axios.get("http://ip-api.com/json")
-                // console.log(response.data.city)
-                setlocation(response.data.city)
-            }catch (error) {
-                console.log("Error fetching location data", error)
+                const city = await getUserAddress();
+                console.log(city)
+                setlocation(city);
+            } catch (error) {
+                console.log("Error fetching location data:", error);
+                
             }
         }
-        getLocation()
-    },[])
+        getLocation();
+    }, [])
     useEffect(() => {
         async function getWeatherData() {
             try{
-            const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=21937f7fa61c4d159e152858251002&q=${location}&aqi=no`)
-            // console.info(response)
-            // console.log(response.data)
-            setWeatherData(response.data)
+                const response = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=21937f7fa61c4d159e152858251002&q=${location}&days=7&aqi=yes`)
+                setWeatherData(response.data)
+                console.log(response.data)
             }catch(error){
                 console.log("Error fetching weather data", error)
                 alert("Location not found")
